@@ -1,9 +1,7 @@
 .formControl {
-  display: inline-flex;
-  align-items: center;
   margin-bottom: 30px !important;
-  width: 30%;
+  width: 35%;
   margin-left: auto;
   margin-right: auto;
-  transform: translate(120%, -50%);
+  transform: translate(92%, -50%);
 }
