@@ -1,5 +1,4 @@
 import axios from "axios";
-import { render } from "@testing-library/react";
 
 const url = "https://covid19.mathdro.id/api";
 
