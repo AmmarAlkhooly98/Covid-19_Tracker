@@ -1,6 +1,29 @@
 .container {
   display: flex;
   justify-content: center;
-  width: 100%;
-  margin-top: 20px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* For Mobile */
+@media screen and (max-width: 540px) {
+  .container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* For Tablets */
+@media screen and (min-width: 540px) and (max-width: 780px) {
+  .container {
+    display: flex;
+    justify-content: center;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
