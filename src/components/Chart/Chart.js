@@ -4,7 +4,7 @@ import { Line, Bar } from "react-chartjs-2";
 
 import styles from "./Chart.module.css";
 
-const Chart = () => {
+const Chart = ({ data, country }) => {
   const [dailyData, setDailyData] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Chart = () => {
   }, [setDailyData]);
   console.log(dailyData);
 
-  return dailyData.length ? (
+  const lineChart = dailyData.length ? (
     <Line
       className={styles.container}
       data={{
@@ -40,11 +40,7 @@ const Chart = () => {
     />
   ) : null;
 
-  // return (
-  //   <div>
-  //     <LineCharta />
-  //   </div>
-  // );
+  return <div className={styles.container}>{lineChart}</div>;
 };
 
 export default Chart;

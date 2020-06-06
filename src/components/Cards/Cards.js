@@ -35,7 +35,7 @@ const Cards = (props) => {
               item[0] === "deaths"
                 ? "Number of deaths caused by Covid-19"
                 : null;
-            const lastUpdated = item[0] === "lastUpdate" ? item[1] : null;
+            // const lastUpdated = item[0] === "lastUpdate" ? item[1] : null;
             const deathsVal = item[0] === "deaths" ? item[1].value : null;
             const style =
               item[0] === "confirmed"
@@ -45,6 +45,7 @@ const Cards = (props) => {
                 : item[0] === "recovered"
                 ? styles.recovered
                 : null;
+
             return (
               <div key={item[0]}>
                 {item[0] !== "lastUpdate" ? (

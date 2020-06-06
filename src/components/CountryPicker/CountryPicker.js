@@ -14,8 +14,8 @@ const CountryPicker = ({ handelCountryChange }) => {
 
     getCountries();
   }, [setCountries]);
-  console.log(countries);
-  return (
+
+  return countries.length ? (
     <FormControl className={styles.formControl}>
       <NativeSelect
         defaultValue=""
@@ -30,7 +30,7 @@ const CountryPicker = ({ handelCountryChange }) => {
         {}
       </NativeSelect>
     </FormControl>
-  );
+  ) : null;
 };
 
 export default CountryPicker;
