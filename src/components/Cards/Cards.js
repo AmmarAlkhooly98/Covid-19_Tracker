@@ -35,9 +35,8 @@ const Cards = (props) => {
               item[0] === "deaths"
                 ? "Number of deaths caused by Covid-19"
                 : null;
-            const deathsVal = item[0] === "deaths" ? item[1].value : null;
             const lastUpdated = item[0] === "lastUpdate" ? item[1] : null;
-
+            const deathsVal = item[0] === "deaths" ? item[1].value : null;
             const style =
               item[0] === "confirmed"
                 ? styles.confirmed
@@ -69,7 +68,7 @@ const Cards = (props) => {
                         />
                       </Typography>
                       <Typography color="textSecondary">
-                        {new Date(lastUpdated).toDateString()}
+                        {new Date().toDateString()}
                       </Typography>
                       <Typography variant="body2">
                         {recoveredInfo || deathsInfo || confirmedInfo}
