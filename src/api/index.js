@@ -40,3 +40,20 @@ export const fetchCountries = async () => {
     console.log(error);
   }
 };
+
+export const fetchTableData = async () => {
+  const url = "https://covid-193.p.rapidapi.com/statistics";
+
+  try {
+    const data = await axios.get(url, {
+      headers: {
+        "x-rapidapi-host": "covid-193.p.rapidapi.com",
+        "x-rapidapi-key": process.env.RAPID_API_KEY,
+        useQueryString: true,
+      },
+    });
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};

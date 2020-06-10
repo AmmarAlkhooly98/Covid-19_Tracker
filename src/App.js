@@ -4,6 +4,7 @@ import { Cards, Chart, CountryPicker } from "./components";
 import styles from "./App.module.css";
 import { fetchData } from "./api";
 import image from "./images/image.png";
+import { fetchTableData } from "./api";
 
 class App extends React.Component {
   state = {
@@ -12,6 +13,7 @@ class App extends React.Component {
   async componentDidMount() {
     const fetchedData = await fetchData();
     this.setState({ data: fetchedData });
+    fetchTableData();
   }
 
   handelCountryChange = async (country) => {
