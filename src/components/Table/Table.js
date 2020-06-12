@@ -96,7 +96,6 @@ function EnhancedTableHead(props) {
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
-            type="tel"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
@@ -235,12 +234,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography
-          className={classes.title}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
+        <Typography className={classes.title} variant="h6" component="div">
           Covid-19 Data
         </Typography>
       )}
@@ -393,7 +387,6 @@ const TableData = () => {
               aria-labelledby="tableTitle"
               size={dense ? "small" : "medium"}
               aria-label="enhanced table"
-              id="covid-19-table"
             >
               <EnhancedTableHead
                 classes={classes}
@@ -423,7 +416,6 @@ const TableData = () => {
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
-                            type="tel"
                             checked={isItemSelected}
                             inputProps={{ "aria-labelledby": labelId }}
                           />
