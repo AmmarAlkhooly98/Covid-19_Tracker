@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@material-ui/core";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { lighten, makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import FilterListIcon from "@material-ui/icons/FilterList";
 import { fetchTableData } from "../../api";
 
 // import styles from "./Table.module.css";
@@ -38,7 +50,200 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
+const headCells = [
+  {
+    id: "country",
+    numeric: false,
+    disablePadding: true,
+    label: "Country",
+  },
+  { id: "infected", numeric: true, disablePadding: false, label: "Infected" },
+  { id: "recovered", numeric: true, disablePadding: false, label: "Recovered" },
+  { id: "deaths", numeric: true, disablePadding: false, label: "Deaths" },
+  { id: "new cases", numeric: true, disablePadding: false, label: "New Cases" },
+  {
+    id: "date updated",
+    numeric: true,
+    disablePadding: false,
+    label: "Date Updated",
+  },
+  {
+    id: "population",
+    numeric: true,
+    disablePadding: false,
+    label: "Population",
+  },
+];
+
+function EnhancedTableHead(props) {
+  const {
+    classes,
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
+
+  return (
+    <TableHead>
+      <TableRow>
+        <TableCell padding="checkbox">
+          <Checkbox
+            type="tel"
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{ "aria-label": "select all desserts" }}
+          />
+        </TableCell>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align={headCell.numeric ? "right" : "left"}
+            padding={headCell.disablePadding ? "none" : "default"}
+            sortDirection={orderBy === headCell.id ? order : false}
+          >
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : "asc"}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <span className={classes.visuallyHidden}>
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                </span>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
+}
+
+EnhancedTableHead.propTypes = {
+  classes: PropTypes.object.isRequired,
+  numSelected: PropTypes.number.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired,
+};
+
+const useToolbarStyles = makeStyles((theme) => ({
+  root: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(1),
+  },
+  highlight:
+    theme.palette.type === "light"
+      ? {
+          color: theme.palette.secondary.main,
+          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+        }
+      : {
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.secondary.dark,
+        },
+  title: {
+    flex: "1 1 100%",
+  },
+}));
+
+const EnhancedTableToolbar = (props) => {
+  const classes = useToolbarStyles();
+  const { numSelected } = props;
+
+  return (
+    <Toolbar
+      className={clsx(classes.root, {
+        [classes.highlight]: numSelected > 0,
+      })}
+    >
+      {numSelected > 0 ? (
+        <Typography
+          className={classes.title}
+          color="inherit"
+          variant="subtitle1"
+          component="div"
+        >
+          {numSelected} selected
+        </Typography>
+      ) : (
+        <Typography
+          className={classes.title}
+          variant="h6"
+          id="tableTitle"
+          component="div"
+        >
+          Covid-19 Data
+        </Typography>
+      )}
+
+      {numSelected > 0 ? (
+        <Tooltip title="Copy">
+          <IconButton aria-label="Copy">
+            <FileCopyIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <Tooltip title="Filter list">
+          <IconButton aria-label="filter list">
+            <FilterListIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+    </Toolbar>
+  );
+};
+
+EnhancedTableToolbar.propTypes = {
+  numSelected: PropTypes.number.isRequired,
+};
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    marginTop: "50px",
+    marginBottom: "50px",
+    marginLeft: "10px",
+    marginRight: "100px",
+  },
+  paper: {
+    width: "100%",
+    marginBottom: theme.spacing(2),
+  },
+  table: {
+    minWidth: 750,
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: "rect(0 0 0 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    top: 20,
+    width: 1,
+  },
+}));
+
 const TableData = () => {
+  const classes = useStyles();
+  const [order, setOrder] = React.useState("desc");
+  const [orderBy, setOrderBy] = React.useState("population");
+  const [selected, setSelected] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -48,51 +253,183 @@ const TableData = () => {
     getTableData();
   }, [setTableData]);
 
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = tableData.map((n) => n.country);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelected(newSelected);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleChangeDense = (event) => {
+    setDense(event.target.checked);
+  };
+
+  const isSelected = (name) => selected.indexOf(name) !== -1;
+
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage);
+
   console.log(tableData);
 
   return (
-    <TableContainer
-      component={Paper}
-      style={{
-        minWidth: "650",
-        maxWidth: 1300,
-        justifyContent: "left",
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginTop: "60px",
-      }}
-    >
-      <Table
-        aria-label="simple table"
-        style={{ minWidth: "650", maxWidth: 1300 }}
-      >
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">Country</TableCell>
-            <TableCell align="left">Infected</TableCell>
-            <TableCell align="left">Recovered</TableCell>
-            <TableCell align="left">Deaths</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tableData.map((item, i) => (
-            <TableRow key={item}>
-              {console.log(item)}
-              <TableCell align="left">{item.country}</TableCell>
-              <TableCell component="th" scope="row" align="left">
-                {item.cases.total}
-              </TableCell>
-              {item.cases.recovered !== 0 ? (
-                <TableCell align="left">{item.cases.recovered}</TableCell>
-              ) : (
-                <TableCell>-</TableCell>
-              )}
-              <TableCell align="left">{item.deaths.total}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className={classes.root}>
+      {tableData.length ? (
+        <Paper className={classes.paper}>
+          <EnhancedTableToolbar numSelected={selected.length} />
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={dense ? "small" : "medium"}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={tableData.length}
+              />
+              <TableBody>
+                {stableSort(tableData, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item, index) => {
+                    const isItemSelected = isSelected(item.country);
+                    const labelId = `enhanced-table-checkbox-${index}`;
+
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, item.country)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={item.country}
+                        selected={isItemSelected}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            type="tel"
+                            checked={isItemSelected}
+                            inputProps={{ "aria-labelledby": labelId }}
+                          />
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          {item.country}
+                        </TableCell>
+                        <TableCell align="right">
+                          {item.cases.total
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </TableCell>
+
+                        <TableCell align="right">
+                          {item.cases.recovered
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </TableCell>
+
+                        <TableCell align="right">
+                          {item.deaths.total
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </TableCell>
+                        {item.cases.new !== null &&
+                        item.cases.new !== undefined ? (
+                          <TableCell align="right">
+                            {item.cases.new
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </TableCell>
+                        ) : (
+                          <TableCell align="right">0</TableCell>
+                        )}
+                        <TableCell align="right">
+                          {new Date().toDateString(item.day)}
+                        </TableCell>
+                        {item.population !== null &&
+                        item.population !== undefined ? (
+                          <TableCell align="right">
+                            {item.population
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </TableCell>
+                        ) : (
+                          <TableCell align="right">-</TableCell>
+                        )}
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 50, tableData.length]}
+            component="div"
+            count={tableData.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+      ) : null}
+      {tableData.length ? (
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
+        />
+      ) : null}
+    </div>
   );
 };
 
