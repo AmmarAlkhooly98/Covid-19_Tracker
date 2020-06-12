@@ -213,8 +213,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginTop: "50px",
     marginBottom: "50px",
-    marginLeft: "10px",
-    marginRight: "100px",
+    marginLeft: "5px",
+    marginRight: "10px",
   },
   paper: {
     width: "100%",
