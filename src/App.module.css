@@ -20,6 +20,19 @@
   margin-right: auto;
 }
 
+@media only screen and (min-width: 1580px) {
+  .image {
+    display: "inline";
+    position: relative;
+    left: "50%";
+    top: "50%";
+    width: 40%;
+    transform: translate(75%, 7%);
+    margin-top: 50px;
+    margin-bottom: 15px;
+  }
+}
+
 @media only screen and (max-width: 770px) {
   .image {
     display: "inline";

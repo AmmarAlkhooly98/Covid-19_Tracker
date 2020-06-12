@@ -45,14 +45,17 @@ export const fetchTableData = async () => {
   const url = "https://covid-193.p.rapidapi.com/statistics";
 
   try {
-    const data = await axios.get(url, {
+    const {
+      data: { response },
+    } = await axios.get(url, {
       headers: {
         "x-rapidapi-host": "covid-193.p.rapidapi.com",
-        "x-rapidapi-key": process.env.RAPID_API_KEY,
+        "x-rapidapi-key": "5ee541612dmsh274f4b3d3135a95p1fc632jsn2b12d7ee936b",
         useQueryString: true,
       },
     });
-    console.log(data);
+    console.log(response);
+    return response;
   } catch (error) {
     console.log(error);
   }
