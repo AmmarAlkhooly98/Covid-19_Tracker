@@ -2,7 +2,7 @@
   "name": "covid-19_tracker",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ammaralkhooly98.github.io/covid-19_tracker",
+  "homepage": "https://ammar-covid-19.github.io",
   "dependencies": {
     "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
