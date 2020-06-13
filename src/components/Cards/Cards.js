@@ -59,8 +59,8 @@ const Cards = (props) => {
                   >
                     <CardContent>
                       <Typography color="textSecondary" gutterBottom>
-                        {confirmed || deaths || recovered} -{" "}
-                        {country ? country : "Global"}
+                        {confirmed || deaths || recovered}{" "}
+                        {country && <text>in</text>} {country && country}
                       </Typography>
                       <Typography variant="h5">
                         <CountUp
