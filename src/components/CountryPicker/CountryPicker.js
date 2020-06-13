@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormControl, NativeSelect } from "@material-ui/core";
+import { FormControl, NativeSelect, Typography } from "@material-ui/core";
 import { fetchCountries } from "../../api";
 
 import styles from "./CountryPicker.module.css";
@@ -17,6 +17,9 @@ const CountryPicker = ({ handelCountryChange }) => {
 
   return countries.length ? (
     <FormControl className={styles.formControl}>
+      <Typography variant="overline" display="block" gutterBottom>
+        Choose Country:
+      </Typography>
       <NativeSelect
         defaultValue=""
         onChange={(e) => handelCountryChange(e.target.value)}
