@@ -24,8 +24,6 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { fetchTableData } from "../../api";
 
-// import styles from "./Table.module.css";
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
