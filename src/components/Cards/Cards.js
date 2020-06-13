@@ -60,7 +60,8 @@ const Cards = (props) => {
                     <CardContent>
                       <Typography color="textSecondary" gutterBottom>
                         {confirmed || deaths || recovered}{" "}
-                        {country && <text>in</text>} {country && country}
+                        {country && <text is="x3d">in</text>}{" "}
+                        {country && country}
                       </Typography>
                       <Typography variant="h5">
                         <CountUp
