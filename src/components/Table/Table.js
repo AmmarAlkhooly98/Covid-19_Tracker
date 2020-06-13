@@ -480,7 +480,7 @@ const TableData = () => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 50, tableData.length]}
+            rowsPerPageOptions={[5, 10, 50, tableData.length]}
             component="div"
             count={tableData.length}
             rowsPerPage={rowsPerPage}
