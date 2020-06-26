@@ -7,8 +7,7 @@ import { fetchTableData } from "../../api";
 import cx from "classnames";
 
 const Cards = (props) => {
-  const {
-    data,
+  let {
     data: { confirmed },
     country,
   } = props;
@@ -22,16 +21,40 @@ const Cards = (props) => {
     getTableData();
   }, [country]);
 
+  // const destructureData = () => {
   if (newCases !== undefined && newCases !== null && newCases.length === 1) {
     for (var i = 0; i < newCases.length; i++) {
-      newCasesDestructured.push({
-        "New Cases": newCases[0].cases.new,
-        Country: newCases[0].country,
-        Recovered: newCases[0].cases.recovered,
-        Infected: newCases[0].cases.total,
-        Deaths: newCases[0].deaths.total,
-        "Time Updated": newCases[0].time,
-      });
+      newCasesDestructured.push(
+        {
+          title: "New Cases",
+          total: newCases[0].cases.new,
+          "time updated": newCases[0].time,
+          country: newCases[0].country,
+          info: "New cases for Covid-19",
+        },
+
+        {
+          title: "Infected",
+          total: newCases[0].cases.total,
+          "time updated": newCases[0].time,
+          country: newCases[0].country,
+          info: "Number of active cases of Covid-19",
+        },
+        {
+          title: "Recovered",
+          total: newCases[0].cases.recovered,
+          "time updated": newCases[0].time,
+          country: newCases[0].country,
+          info: "Number of recoveries from Covid-19",
+        },
+        {
+          title: "Deaths",
+          total: newCases[0].deaths.total,
+          "time updated": newCases[0].time,
+          country: newCases[0].country,
+          info: "Number of deaths caused by Covid-19",
+        }
+      );
     }
   } else if (
     newCases !== undefined &&
@@ -40,24 +63,50 @@ const Cards = (props) => {
   ) {
     newCases.map((item) => {
       if (item.country === "All") {
-        newCasesDestructured.push({
-          "New Cases": item.cases.new,
-          Country: item.country,
-          Recovered: item.cases.recovered,
-          Infected: item.cases.total,
-          Deaths: item.deaths.total,
-          "Time Updated": item.time,
-        });
+        newCasesDestructured.push(
+          {
+            title: "New Cases",
+            total: item.cases.new,
+            "time updated": item.time,
+            country: item.country,
+            info: "New cases for Covid-19",
+          },
+
+          {
+            title: "Infected",
+            total: item.cases.total,
+            "time updated": item.time,
+            country: item.country,
+            info: "Number of active cases of Covid-19",
+          },
+          {
+            title: "Recovered",
+            total: item.cases.recovered,
+            "time updated": item.time,
+            country: item.country,
+            info: "Number of recoveries from Covid-19",
+          },
+          {
+            title: "Deaths",
+            total: item.deaths.total,
+            "time updated": item.time,
+            country: item.country,
+            info: "Number of deaths caused by Covid-19",
+          }
+        );
       }
     });
   }
-
-  // newCasesDestructured.map((item, i) => {
-  //   console.log(item.Country);
-  // });
-
-  console.log(newCasesDestructured, "new cases destructured");
-  console.log(data, "old data");
+  // };
+  // destructureData();
+  useEffect(() => {
+    if (country && newCasesDestructured.length === 0) {
+      const getTableData = async () => {
+        setNewCases(await fetchTableData());
+      };
+      getTableData();
+    }
+  }, [newCasesDestructured.length, country]);
 
   return (
     <div className={styles.container}>
@@ -65,103 +114,47 @@ const Cards = (props) => {
         <LoopCircleLoading />
       ) : (
         <Grid container justify="center" spacing={3}>
-          {Object.entries(data).map((item, i) => {
-            const confirmed = item[0] === "confirmed" ? "Infected" : null;
-            const confirmedInfo =
-              item[0] === "confirmed"
-                ? "Number of active cases of Covid-19"
-                : null;
-            const confirmedVal = item[0] === "confirmed" ? item[1].value : null;
-            const recovered = item[0] === "recovered" ? "Recovered" : null;
-            const recoveredInfo =
-              item[0] === "recovered"
-                ? "Number of recoveries from Covid-19"
-                : null;
-            const recoveredVal = item[0] === "recovered" ? item[1].value : null;
-            const deaths = item[0] === "deaths" ? "Deaths" : null;
-            const deathsInfo =
-              item[0] === "deaths"
-                ? "Number of deaths caused by Covid-19"
-                : null;
-            // const lastUpdated = item[0] === "lastUpdate" ? item[1] : null;
-            const deathsVal = item[0] === "deaths" ? item[1].value : null;
+          {newCasesDestructured.map((item, i) => {
             const style =
-              item[0] === "confirmed"
+              item.title === "Infected"
                 ? styles.confirmed
-                : item[0] === "deaths"
+                : item.title === "Deaths"
                 ? styles.deaths
-                : item[0] === "recovered"
+                : item.title === "Recovered"
                 ? styles.recovered
+                : item.title === "New Cases"
+                ? styles.newCases
                 : null;
-
             return (
-              <div key={item[0]}>
-                {item[0] !== "lastUpdate" ? (
-                  <Grid
-                    item
-                    component={Card}
-                    // xs={12}
-                    // md={4}
-                    className={cx(styles.card, style)}
-                  >
-                    <CardContent>
-                      <Typography color="textSecondary" gutterBottom>
-                        {confirmed || deaths || recovered}{" "}
-                        {country && <text is="x3d">-</text>}{" "}
-                        {country && country}
-                      </Typography>
-                      <Typography variant="h5">
-                        <CountUp
-                          start={0}
-                          end={confirmedVal || deathsVal || recoveredVal}
-                          duration={2.5}
-                          separator=","
-                        />
-                      </Typography>
-                      <Typography color="textSecondary">
-                        {new Date().toDateString()}
-                      </Typography>
-                      <Typography variant="body2">
-                        {recoveredInfo || deathsInfo || confirmedInfo}
-                      </Typography>
-                    </CardContent>
-                  </Grid>
-                ) : null}
-
-                {/* {newCasesDestructured.map((item, i) => {
-                  return (
-                    <Grid
-                      item
-                      component={Card}
-                      // xs={12}
-                      // md={4}
-                      className={cx(styles.card, style)}
-                    >
-                      <CardContent>
-                        <Typography color="textSecondary" gutterBottom>
-                          {confirmed || deaths || recovered}{" "}
-                          {country && <text is="x3d">-</text>}{" "}
-                          {country && country}
-                        </Typography>
-                        <Typography variant="h5">
-                          <CountUp
-                            start={0}
-                            end={confirmedVal || deathsVal || recoveredVal}
-                            duration={2.5}
-                            separator=","
-                          />
-                        </Typography>
-                        <Typography color="textSecondary">
-                          {new Date().toDateString()}
-                        </Typography>
-                        <Typography variant="body2">
-                          {recoveredInfo || deathsInfo || confirmedInfo}
-                        </Typography>
-                      </CardContent>
-                    </Grid>
-                  );
-                })} */}
-              </div>
+              <Grid
+                item
+                key={i}
+                component={Card}
+                className={cx(styles.card, style)}
+              >
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom>
+                    {item.title}{" "}
+                    {country && newCases.length === 1 ? (
+                      <text is="x3d">-</text>
+                    ) : null}{" "}
+                    {country && newCases.length === 1 ? country : null}
+                  </Typography>
+                  <Typography variant="h5">
+                    {item.title === "New Cases" ? "+" : null}
+                    <CountUp
+                      start={0}
+                      end={item.total}
+                      duration={2.5}
+                      separator=","
+                    />
+                  </Typography>
+                  <Typography color="textSecondary">
+                    {new Date(item["time updated"]).toDateString()}
+                  </Typography>
+                  <Typography variant="body2">{item.info}</Typography>
+                </CardContent>
+              </Grid>
             );
           })}
         </Grid>

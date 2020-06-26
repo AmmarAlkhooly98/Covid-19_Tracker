@@ -84,7 +84,6 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
-    country,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -282,7 +281,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "50px",
     marginBottom: "50px",
     paddingLeft: "3%",
-    paddingRight: "0.9%",
+    paddingRight: "1%",
   },
   paper: {
     width: "100%",
@@ -388,8 +387,9 @@ const TableData = (props) => {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage);
+  const emptyRows = tableData.length
+    ? rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage)
+    : null;
 
   return (
     <div className={classes.root}>
@@ -409,7 +409,6 @@ const TableData = (props) => {
             >
               <EnhancedTableHead
                 classes={classes}
-                country={country}
                 numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}

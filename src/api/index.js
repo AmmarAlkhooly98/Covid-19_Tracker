@@ -57,7 +57,6 @@ export const fetchTableData = async (country) => {
         country: country === "" ? null : country,
       },
     });
-    console.log(response);
     return response;
   } catch (error) {
     console.log(error);

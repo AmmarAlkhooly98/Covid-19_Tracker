@@ -4,6 +4,7 @@
 
 .card {
   margin: 15px 15px 2% !important;
+  width: 300px;
 }
 
 .confirmed {
@@ -16,4 +17,15 @@
 
 .deaths {
   border-bottom: 10px solid rgba(255, 0, 0, 0.5);
+}
+
+.newCases {
+  border-bottom: 10px solid rgba(255, 190, 13, 0.5);
+}
+
+@media screen and (max-width: 540px) {
+  .card {
+    margin: 15px 15px 2% !important;
+    width: 76%;
+  }
 }
