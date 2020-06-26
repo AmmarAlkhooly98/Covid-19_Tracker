@@ -41,17 +41,6 @@ const App = () => {
       <Table country={country} />
       <div className={styles.push}></div>
       {data.confirmed && <StickyFooter />}
-      {/* {data.confirmed ? (
-        <div className={styles.footer}>
-          Made by:{" "}
-          <a href="https://www.linkedin.com/in/ammar-alkhooly/">
-            Ammar Alkhooly
-          </a>{" "}
-          | Email:{" "}
-          <a href="mailto:ammaralkhooly1@gmail.com">ammaralkhooly1@gmail.com</a>{" "}
-          | Phone: <a href="tel:+962780623701">+962780623701</a>
-        </div>
-      ) : null} */}
     </div>
   );
 };

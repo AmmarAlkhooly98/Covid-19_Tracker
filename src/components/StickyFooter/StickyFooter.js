@@ -7,19 +7,21 @@ import Link from "@material-ui/core/Link";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary">
-      {"Copyright © "}
-      <Link color="inherit" href="https://ammar-alkhooly.herokuapp.com/">
-        <u>Ammar Alkhooly</u>
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
+    <div>
+      <Typography variant="body2" color="textSecondary">
+        {"Copyright © "}
+        <Link color="inherit" href="https://ammar-alkhooly.herokuapp.com/">
+          <u>Ammar Alkhooly</u>
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
       <p>
         Phone: <a href="tel:+962780623701">+962780623701</a>
       </p>
       Email:{" "}
       <a href="mailto:ammaralkhooly1@gmail.com"> ammaralkhooly1@gmail.com</a>
-    </Typography>
+    </div>
   );
 }
 
