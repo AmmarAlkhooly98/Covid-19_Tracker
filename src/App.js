@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Cards, Chart, CountryPicker, Table } from "./components";
+import { Cards, Chart, CountryPicker, Table, StickyFooter } from "./components";
 import styles from "./App.module.css";
 import { fetchData } from "./api";
 import image from "./images/image.png";
@@ -33,14 +33,15 @@ const App = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ marginleft: "0%" }}>
       <img className={styles.image} src={image} alt="COVID-19" />
       <Cards data={data} country={country} />
       <CountryPicker handelCountryChange={handelCountryChange} />
       <Chart data={data} country={country} />
-      <Table />
+      <Table country={country} />
       <div className={styles.push}></div>
-      {data.confirmed ? (
+      {data.confirmed && <StickyFooter />}
+      {/* {data.confirmed ? (
         <div className={styles.footer}>
           Made by:{" "}
           <a href="https://www.linkedin.com/in/ammar-alkhooly/">
@@ -50,7 +51,7 @@ const App = () => {
           <a href="mailto:ammaralkhooly1@gmail.com">ammaralkhooly1@gmail.com</a>{" "}
           | Phone: <a href="tel:+962780623701">+962780623701</a>
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

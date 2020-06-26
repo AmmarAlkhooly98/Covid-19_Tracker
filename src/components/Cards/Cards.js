@@ -12,6 +12,8 @@ const Cards = (props) => {
     country,
   } = props;
 
+  console.log(data);
+
   return (
     <div className={styles.container}>
       {!confirmed ? (

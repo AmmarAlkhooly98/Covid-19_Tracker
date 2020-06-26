@@ -280,6 +280,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginTop: "50px",
     marginBottom: "50px",
+    paddingLeft: "3%",
+    paddingRight: "0.9%",
   },
   paper: {
     width: "100%",
@@ -301,7 +303,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TableData = () => {
+const TableData = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState("desc");
   const [orderBy, setOrderBy] = React.useState("population");
@@ -310,13 +312,30 @@ const TableData = () => {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [tableData, setTableData] = useState([]);
+  const { country } = props;
 
   useEffect(() => {
     const getTableData = async () => {
-      setTableData(await fetchTableData());
+      setTableData(await fetchTableData(country));
     };
     getTableData();
-  }, [setTableData]);
+  }, [country]);
+
+  useEffect(() => {
+    if (country) {
+      setRowsPerPage(1);
+    }
+  }, [country]);
+
+  useEffect(() => {
+    if (tableData.length === 0) {
+      const getTableData = async () => {
+        setTableData(await fetchTableData());
+        setRowsPerPage(5);
+      };
+      getTableData();
+    }
+  }, [tableData.length]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";

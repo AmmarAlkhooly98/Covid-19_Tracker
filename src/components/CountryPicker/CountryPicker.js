@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormControl, NativeSelect, Typography } from "@material-ui/core";
-import { fetchCountries } from "../../api";
+import { fetchCountries, fetchTableData } from "../../api";
 
 import styles from "./CountryPicker.module.css";
 
@@ -22,7 +22,10 @@ const CountryPicker = ({ handelCountryChange }) => {
       </Typography>
       <NativeSelect
         defaultValue=""
-        onChange={(e) => handelCountryChange(e.target.value)}
+        onChange={(e) => {
+          handelCountryChange(e.target.value);
+          fetchTableData(e.target.value);
+        }}
       >
         <option value="">Global</option>
         {countries.map((country, i) => (

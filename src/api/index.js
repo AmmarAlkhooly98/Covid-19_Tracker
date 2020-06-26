@@ -41,7 +41,7 @@ export const fetchCountries = async () => {
   }
 };
 
-export const fetchTableData = async () => {
+export const fetchTableData = async (country) => {
   const url = "https://covid-193.p.rapidapi.com/statistics";
 
   try {
@@ -53,7 +53,11 @@ export const fetchTableData = async () => {
         "x-rapidapi-key": "5ee541612dmsh274f4b3d3135a95p1fc632jsn2b12d7ee936b",
         useQueryString: true,
       },
+      params: {
+        country: country === "" ? null : country,
+      },
     });
+    console.log(response);
     return response;
   } catch (error) {
     console.log(error);
