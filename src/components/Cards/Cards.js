@@ -144,7 +144,7 @@ const Cards = (props) => {
                     {item.title === "New Cases" ? "+" : null}
                     <CountUp
                       start={0}
-                      end={item.total}
+                      end={parseInt(item.total)}
                       duration={2.5}
                       separator=","
                     />
