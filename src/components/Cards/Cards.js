@@ -22,14 +22,16 @@ const Cards = (props) => {
     getTableData();
   }, [country]);
 
-  console.log(newCases, "new cases");
   if (newCases !== undefined && newCases !== null && newCases.length === 1) {
     for (var i = 0; i < newCases.length; i++) {
-      newCasesDestructured.push(
-        ["New Cases", newCases[0].cases.new],
-        ["Country", newCases[0].country],
-        ["Time Updated", newCases[0].time]
-      );
+      newCasesDestructured.push({
+        "New Cases": newCases[0].cases.new,
+        Country: newCases[0].country,
+        Recovered: newCases[0].cases.recovered,
+        Infected: newCases[0].cases.total,
+        Deaths: newCases[0].deaths.total,
+        "Time Updated": newCases[0].time,
+      });
     }
   } else if (
     newCases !== undefined &&
@@ -37,18 +39,25 @@ const Cards = (props) => {
     newCases.length > 1
   ) {
     newCases.map((item) => {
-      console.log(item.country);
       if (item.country === "All") {
-        newCasesDestructured.push(
-          ["New Cases", item.cases.new],
-          ["Country", item.country],
-          ["Time Updated", item.time]
-        );
+        newCasesDestructured.push({
+          "New Cases": item.cases.new,
+          Country: item.country,
+          Recovered: item.cases.recovered,
+          Infected: item.cases.total,
+          Deaths: item.deaths.total,
+          "Time Updated": item.time,
+        });
       }
     });
   }
 
+  // newCasesDestructured.map((item, i) => {
+  //   console.log(item.Country);
+  // });
+
   console.log(newCasesDestructured, "new cases destructured");
+  console.log(data, "old data");
 
   return (
     <div className={styles.container}>
@@ -118,6 +127,40 @@ const Cards = (props) => {
                     </CardContent>
                   </Grid>
                 ) : null}
+
+                {/* {newCasesDestructured.map((item, i) => {
+                  return (
+                    <Grid
+                      item
+                      component={Card}
+                      // xs={12}
+                      // md={4}
+                      className={cx(styles.card, style)}
+                    >
+                      <CardContent>
+                        <Typography color="textSecondary" gutterBottom>
+                          {confirmed || deaths || recovered}{" "}
+                          {country && <text is="x3d">-</text>}{" "}
+                          {country && country}
+                        </Typography>
+                        <Typography variant="h5">
+                          <CountUp
+                            start={0}
+                            end={confirmedVal || deathsVal || recoveredVal}
+                            duration={2.5}
+                            separator=","
+                          />
+                        </Typography>
+                        <Typography color="textSecondary">
+                          {new Date().toDateString()}
+                        </Typography>
+                        <Typography variant="body2">
+                          {recoveredInfo || deathsInfo || confirmedInfo}
+                        </Typography>
+                      </CardContent>
+                    </Grid>
+                  );
+                })} */}
               </div>
             );
           })}

@@ -84,6 +84,7 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
+    country,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -195,7 +196,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, country } = props;
 
   // const searchCountry = () => {
   //   let input, filter, table, tr, td, i, txtValue;
@@ -233,7 +234,7 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" component="div">
-          Covid-19 Data
+          Covid-19 Data {country ? "-  " + country : null}
         </Typography>
       )}
 
@@ -335,7 +336,7 @@ const TableData = (props) => {
       };
       getTableData();
     }
-  }, [tableData.length]);
+  }, [tableData]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -395,6 +396,7 @@ const TableData = (props) => {
       {tableData.length ? (
         <Paper className={classes.paper}>
           <EnhancedTableToolbar
+            country={country}
             numSelected={selected.length}
             tableData={tableData}
           />
@@ -407,6 +409,7 @@ const TableData = (props) => {
             >
               <EnhancedTableHead
                 classes={classes}
+                country={country}
                 numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}

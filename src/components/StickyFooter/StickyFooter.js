@@ -12,7 +12,7 @@ function Copyright() {
       <Typography variant="body2" color="textSecondary">
         {"Copyright © "}
         <Link color="inherit" href="https://ammar-alkhooly.herokuapp.com/">
-          <u>Ammar Alkhooly</u>
+          Ammar Alkhooly
         </Link>{" "}
         {new Date().getFullYear()}
         {"."}
