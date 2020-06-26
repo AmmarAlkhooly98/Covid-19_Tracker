@@ -13,6 +13,7 @@ const Cards = (props) => {
     country,
   } = props;
   const [newCases, setNewCases] = useState("");
+  const newCasesDestructured = [];
 
   useEffect(() => {
     const getTableData = async () => {
@@ -22,7 +23,6 @@ const Cards = (props) => {
   }, [country]);
 
   console.log(newCases, "new cases");
-  const newCasesDestructured = [];
   if (newCases !== undefined && newCases !== null && newCases.length === 1) {
     for (var i = 0; i < newCases.length; i++) {
       newCasesDestructured.push(
@@ -31,12 +31,22 @@ const Cards = (props) => {
         ["Time Updated", newCases[0].time]
       );
     }
+  } else if (
+    newCases !== undefined &&
+    newCases !== null &&
+    newCases.length > 1
+  ) {
+    newCases.map((item) => {
+      console.log(item.country);
+      if (item.country === "All") {
+        newCasesDestructured.push(
+          ["New Cases", item.cases.new],
+          ["Country", item.country],
+          ["Time Updated", item.time]
+        );
+      }
+    });
   }
-  // else {
-  // newCases.filter((item) => {
-  // return item.country === country;
-  // });
-  // }
 
   console.log(newCasesDestructured, "new cases destructured");
 
