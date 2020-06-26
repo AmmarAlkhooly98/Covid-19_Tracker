@@ -28,6 +28,7 @@ const CountryPicker = ({ handelCountryChange }) => {
         }}
       >
         <option value="">Global</option>
+        <option value="USA">USA</option>
         {countries.map((country, i) => (
           <option key={i} value={country}>
             {country}

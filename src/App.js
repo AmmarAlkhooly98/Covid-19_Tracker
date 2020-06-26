@@ -31,7 +31,6 @@ const App = () => {
   useEffect(() => {
     handleDataFetch();
   }, []);
-
   return (
     <div className={styles.container} style={{ marginleft: "0%" }}>
       <img className={styles.image} src={image} alt="COVID-19" />

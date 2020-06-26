@@ -23,7 +23,7 @@
   border-bottom: 10px solid rgba(255, 190, 13, 0.5);
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 400px) {
   .card {
     margin: 15px 15px 2% !important;
     width: 76%;
