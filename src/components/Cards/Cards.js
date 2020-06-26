@@ -21,7 +21,6 @@ const Cards = (props) => {
     getTableData();
   }, [country]);
 
-  // const destructureData = () => {
   if (newCases !== undefined && newCases !== null && newCases.length === 1) {
     for (var i = 0; i < newCases.length; i++) {
       newCasesDestructured.push(
@@ -97,8 +96,7 @@ const Cards = (props) => {
       }
     });
   }
-  // };
-  // destructureData();
+
   useEffect(() => {
     if (country && newCasesDestructured.length === 0) {
       const getTableData = async () => {

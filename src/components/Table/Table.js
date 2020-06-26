@@ -324,6 +324,8 @@ const TableData = (props) => {
   useEffect(() => {
     if (country) {
       setRowsPerPage(1);
+    } else {
+      setRowsPerPage(5);
     }
   }, [country]);
 

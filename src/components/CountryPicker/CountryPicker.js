@@ -34,7 +34,6 @@ const CountryPicker = ({ handelCountryChange }) => {
             {country}
           </option>
         ))}
-        {}
       </NativeSelect>
     </FormControl>
   ) : null;
