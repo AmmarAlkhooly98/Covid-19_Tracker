@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 function Copyright() {
   return (
@@ -17,10 +18,10 @@ function Copyright() {
         {"."}
       </Typography>
       <p>
-        Phone: <a href="tel:+962780623701">+962780623701</a>
+        Email:{" "}
+        <a href="mailto:ammaralkhooly1@gmail.com"> ammaralkhooly1@gmail.com</a>
       </p>
-      Email:{" "}
-      <a href="mailto:ammaralkhooly1@gmail.com"> ammaralkhooly1@gmail.com</a>
+      Phone: <a href="tel:+962780623701">+962780623701</a>
     </div>
   );
 }
@@ -54,7 +55,12 @@ const StickyFooter = () => {
       <footer className={classes.footer}>
         <Container maxWidth="sm">
           <Typography variant="body1">
-            A M M R &nbsp; A L K H O O L Y
+            <Link color="inherit" href="https://github.com/AmmarAlkhooly98">
+              <GitHubIcon fontSize="small" />
+              <text is="x3d" style={{ position: "relative", bottom: "4px" }}>
+                &nbsp;&nbsp; A M M R &nbsp; A L K H O O L Y
+              </text>
+            </Link>
           </Typography>
           <Copyright />
         </Container>

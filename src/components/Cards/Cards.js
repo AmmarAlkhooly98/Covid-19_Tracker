@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Card, CardContent, Typography } from "@material-ui/core";
 import CountUp from "react-countup";
 import styles from "./Cards.module.css";
 import { LoopCircleLoading } from "react-loadingg";
+import { fetchTableData } from "../../api";
 import cx from "classnames";
 
 const Cards = (props) => {
@@ -11,8 +12,33 @@ const Cards = (props) => {
     data: { confirmed },
     country,
   } = props;
+  const [newCases, setNewCases] = useState("");
 
-  console.log(data);
+  useEffect(() => {
+    const getTableData = async () => {
+      setNewCases(await fetchTableData(country));
+    };
+    getTableData();
+  }, [country]);
+
+  console.log(newCases, "new cases");
+  const newCasesDestructured = [];
+  if (newCases !== undefined && newCases !== null && newCases.length === 1) {
+    for (var i = 0; i < newCases.length; i++) {
+      newCasesDestructured.push(
+        ["New Cases", newCases[0].cases.new],
+        ["Country", newCases[0].country],
+        ["Time Updated", newCases[0].time]
+      );
+    }
+  }
+  // else {
+  // newCases.filter((item) => {
+  // return item.country === country;
+  // });
+  // }
+
+  console.log(newCasesDestructured, "new cases destructured");
 
   return (
     <div className={styles.container}>
