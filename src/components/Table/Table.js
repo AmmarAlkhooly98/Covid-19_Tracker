@@ -324,6 +324,7 @@ const TableData = (props) => {
   useEffect(() => {
     if (country) {
       setRowsPerPage(1);
+      setPage(0);
     } else {
       setRowsPerPage(5);
     }
@@ -389,9 +390,8 @@ const TableData = (props) => {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows = tableData.length
-    ? rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage)
-    : null;
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -501,7 +501,11 @@ const TableData = (props) => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 50, tableData.length]}
+            rowsPerPageOptions={
+              tableData.length > 1
+                ? [5, 10, 50, tableData.length]
+                : [tableData.length, 2]
+            }
             component="div"
             count={tableData.length}
             rowsPerPage={rowsPerPage}
