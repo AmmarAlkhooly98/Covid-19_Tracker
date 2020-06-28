@@ -12,7 +12,6 @@ const Chart = (props) => {
     } = props;
   }
   const [dailyData, setDailyData] = useState([]);
-  console.log(dailyData);
 
   useEffect(() => {
     const fetchAPI = async () => {
