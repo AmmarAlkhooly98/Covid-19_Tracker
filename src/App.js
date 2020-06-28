@@ -42,11 +42,11 @@ const App = () => {
           <Chart data={data} country={country} />
           <Table country={country} />
           <div className={styles.push}></div>
-          <StickyFooter />
         </div>
       ) : (
         <LoopCircleLoading />
       )}
+      <StickyFooter />
     </div>
   );
 };
