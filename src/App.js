@@ -33,7 +33,7 @@ const App = () => {
     handleDataFetch();
   }, []);
   return (
-    <div className={styles.container} style={{ marginleft: "0%" }}>
+    <div className={styles.container}>
       <img className={styles.image} src={image} alt="COVID-19" />
       {data?.confirmed ? (
         <div>
@@ -41,12 +41,13 @@ const App = () => {
           <CountryPicker handelCountryChange={handelCountryChange} />
           <Chart data={data} country={country} />
           <Table country={country} />
-          <div className={styles.push}></div>
+          <div style={{ marginRight: "-13px" }}>
+            <StickyFooter />
+          </div>
         </div>
       ) : (
         <LoopCircleLoading />
       )}
-      <StickyFooter />
     </div>
   );
 };

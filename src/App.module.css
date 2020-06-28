@@ -2,15 +2,9 @@
   background-color: rgb(250, 250, 250);
 }
 
-/* .container { */
-/* flex: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  justify-content: "spaceAround";
-  width: "100%";
-  position: "absolute"; */
-/* } */
+.container {
+  width: 99%;
+}
 
 .image {
   width: 50%;
@@ -21,6 +15,9 @@
 }
 
 @media only screen and (min-width: 1580px) {
+  .container {
+    width: 99%;
+  }
   .image {
     display: "inline";
     position: relative;
@@ -34,6 +31,9 @@
 }
 
 @media only screen and (max-width: 770px) {
+  .container {
+    width: 96.8%;
+  }
   .image {
     display: "inline";
     position: relative;

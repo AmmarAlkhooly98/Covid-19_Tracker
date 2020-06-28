@@ -281,7 +281,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "50px",
     marginBottom: "50px",
     paddingLeft: "2%",
-    paddingRight: "1%",
   },
   paper: {
     width: "100%",
