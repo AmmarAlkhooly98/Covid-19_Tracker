@@ -2,15 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Grid, Card, CardContent, Typography } from "@material-ui/core";
 import CountUp from "react-countup";
 import styles from "./Cards.module.css";
-import { LoopCircleLoading } from "react-loadingg";
 import { fetchTableData } from "../../api";
 import cx from "classnames";
 
-const Cards = (props) => {
-  let {
-    data: { confirmed },
-    country,
-  } = props;
+const Cards = ({ country }) => {
   const [newCases, setNewCases] = useState("");
   const newCasesDestructured = [];
 
@@ -108,55 +103,51 @@ const Cards = (props) => {
 
   return (
     <div className={styles.container}>
-      {!confirmed ? (
-        <LoopCircleLoading />
-      ) : (
-        <Grid container justify="center" spacing={3}>
-          {newCasesDestructured.map((item, i) => {
-            const style =
-              item.title === "Infected"
-                ? styles.confirmed
-                : item.title === "Deaths"
-                ? styles.deaths
-                : item.title === "Recovered"
-                ? styles.recovered
-                : item.title === "New Cases"
-                ? styles.newCases
-                : null;
-            return (
-              <Grid
-                item
-                key={i}
-                component={Card}
-                className={cx(styles.card, style)}
-              >
-                <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
-                    {item.title}{" "}
-                    {country && newCases.length === 1 ? (
-                      <text is="x3d">-</text>
-                    ) : null}{" "}
-                    {country && newCases.length === 1 ? country : null}
-                  </Typography>
-                  <Typography variant="h5">
-                    {item.title === "New Cases" ? "+" : null}
-                    <CountUp
-                      start={0}
-                      end={parseInt(item.total)}
-                      duration={2.5}
-                      separator=","
-                    />
-                  </Typography>
-                  <Typography color="textSecondary">
-                    {new Date(item["time updated"]).toDateString()}
-                  </Typography>
-                  <Typography variant="body2">{item.info}</Typography>
-                </CardContent>
-              </Grid>
-            );
-          })}
-        </Grid>
-      )}
+      <Grid container justify="center" spacing={3}>
+        {newCasesDestructured.map((item, i) => {
+          const style =
+            item.title === "Infected"
+              ? styles.confirmed
+              : item.title === "Deaths"
+              ? styles.deaths
+              : item.title === "Recovered"
+              ? styles.recovered
+              : item.title === "New Cases"
+              ? styles.newCases
+              : null;
+          return (
+            <Grid
+              item
+              key={i}
+              component={Card}
+              className={cx(styles.card, style)}
+            >
+              <CardContent>
+                <Typography color="textSecondary" gutterBottom>
+                  {item.title}{" "}
+                  {country && newCases.length === 1 ? (
+                    <text is="x3d">-</text>
+                  ) : null}{" "}
+                  {country && newCases.length === 1 ? country : null}
+                </Typography>
+                <Typography variant="h5">
+                  {item.title === "New Cases" ? "+" : null}
+                  <CountUp
+                    start={0}
+                    end={parseInt(item.total)}
+                    duration={2.5}
+                    separator=","
+                  />
+                </Typography>
+                <Typography color="textSecondary">
+                  {new Date(item["time updated"]).toDateString()}
+                </Typography>
+                <Typography variant="body2">{item.info}</Typography>
+              </CardContent>
+            </Grid>
+          );
+        })}
+      </Grid>
     </div>
   );
 };

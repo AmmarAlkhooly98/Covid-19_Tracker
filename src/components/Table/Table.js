@@ -391,15 +391,15 @@ const TableData = (props) => {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, tableData?.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
-      {tableData.length ? (
+      {tableData?.[0]?.country ? (
         <Paper className={classes.paper}>
           <EnhancedTableToolbar
             country={country}
-            numSelected={selected.length}
+            numSelected={selected?.length}
             tableData={tableData}
           />
           <TableContainer>
@@ -411,12 +411,12 @@ const TableData = (props) => {
             >
               <EnhancedTableHead
                 classes={classes}
-                numSelected={selected.length}
+                numSelected={selected?.length}
                 order={order}
                 orderBy={orderBy}
                 onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
-                rowCount={tableData.length}
+                rowCount={tableData?.length}
               />
               <TableBody>
                 {stableSort(tableData, getComparator(order, orderBy))
@@ -502,12 +502,12 @@ const TableData = (props) => {
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={
-              tableData.length > 1
-                ? [5, 10, 50, tableData.length]
-                : [tableData.length, 2]
+              tableData?.length > 1
+                ? [5, 10, 50, tableData?.length]
+                : [tableData?.length, 2]
             }
             component="div"
-            count={tableData.length}
+            count={tableData?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
@@ -515,7 +515,7 @@ const TableData = (props) => {
           />
         </Paper>
       ) : null}
-      {tableData.length ? (
+      {tableData?.length ? (
         <FormControlLabel
           control={<Switch checked={dense} onChange={handleChangeDense} />}
           label="Dense padding"

@@ -15,7 +15,7 @@ const CountryPicker = ({ handelCountryChange }) => {
     getCountries();
   }, [setCountries]);
 
-  return countries.length ? (
+  return countries?.length ? (
     <FormControl className={styles.formControl}>
       <Typography variant="overline" display="block" gutterBottom>
         Choose Country:

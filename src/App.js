@@ -4,6 +4,7 @@ import { Cards, Chart, CountryPicker, Table, StickyFooter } from "./components";
 import styles from "./App.module.css";
 import { fetchData } from "./api";
 import image from "./images/image.png";
+import { LoopCircleLoading } from "react-loadingg";
 
 const App = () => {
   const [data, setData] = useState({});
@@ -34,12 +35,18 @@ const App = () => {
   return (
     <div className={styles.container} style={{ marginleft: "0%" }}>
       <img className={styles.image} src={image} alt="COVID-19" />
-      <Cards data={data} country={country} />
-      <CountryPicker handelCountryChange={handelCountryChange} />
-      <Chart data={data} country={country} />
-      <Table country={country} />
-      <div className={styles.push}></div>
-      {data.confirmed && <StickyFooter />}
+      {data?.confirmed ? (
+        <div>
+          <Cards data={data} country={country} />
+          <CountryPicker handelCountryChange={handelCountryChange} />
+          <Chart data={data} country={country} />
+          <Table country={country} />
+          <div className={styles.push}></div>
+          <StickyFooter />
+        </div>
+      ) : (
+        <LoopCircleLoading />
+      )}
     </div>
   );
 };
