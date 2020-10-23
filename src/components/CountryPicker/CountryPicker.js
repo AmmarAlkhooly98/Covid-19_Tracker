@@ -28,7 +28,7 @@ const CountryPicker = ({ handelCountryChange }) => {
         }}
       >
         <option value="">Global</option>
-        <option value="Turkey">Jordan</option>
+        <option value="Turkey">Turkey</option>
         <option value="Jordan">Jordan</option>
         <option value="USA">USA</option>
         <option value="Malaysia">Malaysia</option>
