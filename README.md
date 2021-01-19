@@ -16,4 +16,3 @@ check out the deployed version on: https://ammaralkhooly98.github.io/covid-19_tr
 #### npm run predeploy
 
 #### npm run deploy
-
